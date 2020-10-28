@@ -19,8 +19,6 @@ export class PaginarAlunosHandler {
     };
 
     private getPaginateOptions(paginateAlunoDto: PaginateAlunoDto): AlunoPaginateOptions {
-        console.log(paginateAlunoDto);
-        
         let defaultPage = 1;
         let defaultLimit = 25;
 
@@ -42,9 +40,6 @@ export class PaginarAlunosHandler {
         if(paginateAlunoDto.nome){
             alunoPaginateOptions.nome = paginateAlunoDto.nome;
         }
-
-        console.log(alunoPaginateOptions);
-        
 
         return alunoPaginateOptions;
     }
