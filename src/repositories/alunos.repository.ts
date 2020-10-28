@@ -1,45 +1,31 @@
-import { Situacao } from '../enums/situacao.enum';
+import { getRepository } from 'typeorm';
 import { Aluno } from '../models/aluno';
 
 class AlunosRepository {
-
-    private _alunos: Aluno[] = [];
-
+    
     async paginate(): Promise<Aluno[]> {
-        return this._alunos;
+        const alunosEncontrados = await getRepository(Aluno).find({});        
+        return alunosEncontrados;
     }
 
-    async create(aluno: Aluno): Promise<Aluno> {
-        const alunoTeste: Aluno = {
-            ...aluno,
-            id: Date.now().toString(),
-            nome: 'teste',
-            curso: 'TAD',
-            rga: '201819070573',
-            registradoEm: new Date(),
-            situacao: Situacao.ATIVO,
-        };
-
-        this._alunos.push(alunoTeste);
-
-        return alunoTeste;
+    async create(novoAluno: Aluno): Promise<Aluno> {
+        novoAluno.registradoEm = new Date();
+        const result = await getRepository(Aluno).insert(novoAluno);
+        return result.raw;
     }
 
-    async update(id: string, aluno: Aluno): Promise<Aluno> {
-        const index = this._alunos.findIndex(a => a.id === id);
-        const oldAluno = this._alunos[index]
-        const newAluno = { ...oldAluno, ...aluno };
-        this._alunos[index] = newAluno;
-        return newAluno;
+    async update(id: string, aluno: Aluno): Promise<void> {
+        await getRepository(Aluno).update({id: id}, {...aluno});
     }
 
     async getById(id: string): Promise<Aluno | undefined> {
-        const alunoEncontrado = this._alunos.find(a => a.id === id);
+        const alunoEncontrado = await getRepository(Aluno).findOne({id});        
         return alunoEncontrado;
     }
 
     async remove(id: string): Promise<void> {
-        this._alunos = this._alunos.filter(a => a.id !== id);
+        const result = await getRepository(Aluno).delete({id});        
+        console.log(result);
     }
 }
 

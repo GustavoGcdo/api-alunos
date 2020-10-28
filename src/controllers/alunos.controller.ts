@@ -36,7 +36,7 @@ export class AlunosController {
     }
 
     public async atualizarAluno(request: Request, response: Response) {
-        const result = await this.atualizarAlunoHandler.handle(request.body);
+        const result = await this.atualizarAlunoHandler.handle(request.params.id, request.body);
         return response.json(result);
     }
 

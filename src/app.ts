@@ -4,9 +4,13 @@ import config from './config';
 import { HttpStatus } from './infra/http-status';
 import { Result } from './infra/result';
 import { AlunosRoute } from './routes/alunos.route';
+import "reflect-metadata"
+import { Aluno } from './models/aluno';
+import { createConnection, Connection } from "typeorm";
 
 export class App {
   private app: Application;
+  private connection: Connection | null = null;
 
   constructor() {
     this.app = express();
@@ -35,7 +39,15 @@ export class App {
   }
 
   private async connectToDatabase() {
-    // todo
+    this.connection = await createConnection({
+      type: "sqlite",
+      database: './db/alunos.sqlite',
+      entities: [Aluno],
+      synchronize: false,
+      logging: false
+    });
+
+    console.log('database connected');
   }
 
   public start() {
@@ -49,10 +61,10 @@ export class App {
   }
 
   public getConnection() {
-    // todo
+    return this.connection;
   }
 
   public async disconnect() {
-    // todo
+    this.connection?.close();
   }
 }
