@@ -4,6 +4,8 @@ import { ObterAlunoPorIdHandler } from '../handlers/obter-aluno-por-id.handler';
 import { CriarAlunoHandler } from '../handlers/criar-aluno.handler';
 import { AtualizarAlunoHandler } from '../handlers/atualizar-aluno.handler';
 import { RemoverAlunoHandler } from '../handlers/remover-aluno.handler copy';
+import { HandleResponse } from '../infra/handleResponse';
+import { HttpStatus } from '../infra/http-status';
 
 export class AlunosController {
     private paginarAlunosHandler: PaginarAlunosHandler;
@@ -11,7 +13,7 @@ export class AlunosController {
     private criarAlunoHandler: CriarAlunoHandler;
     private atualizarAlunoHandler: AtualizarAlunoHandler;
     private removerAlunoHandler: RemoverAlunoHandler;
-    
+
     constructor() {
         this.paginarAlunosHandler = new PaginarAlunosHandler();
         this.obterAlunoPorIdHandler = new ObterAlunoPorIdHandler();
@@ -26,8 +28,12 @@ export class AlunosController {
     }
 
     public async criarAluno(request: Request, response: Response) {
-        const result = await this.criarAlunoHandler.handle(request.body);
-        return response.json(result);
+        try {
+            const result = await this.criarAlunoHandler.handle(request.body);
+            return HandleResponse.handle(response, HttpStatus.CREATED, result);
+        } catch (error) {
+            return HandleResponse.handleError(response, HttpStatus.BAD_REQUEST, error);
+        }
     }
 
     public async buscarAlunoPorId(request: Request, response: Response) {

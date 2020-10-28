@@ -1,15 +1,14 @@
 import { getRepository } from 'typeorm';
 import { Aluno } from '../models/aluno';
 
-class AlunosRepository {
-    
+export class AlunosRepository {
+
     async paginate(): Promise<Aluno[]> {
         const alunosEncontrados = await getRepository(Aluno).find({});        
         return alunosEncontrados;
     }
 
     async create(novoAluno: Aluno): Promise<Aluno> {
-        novoAluno.registradoEm = new Date();
         const result = await getRepository(Aluno).insert(novoAluno);
         return result.raw;
     }
@@ -28,6 +27,3 @@ class AlunosRepository {
         console.log(result);
     }
 }
-
-
-export default new AlunosRepository();

@@ -1,15 +1,47 @@
-import { Result } from '../infra/result';
-import alunosRepository from '../repositories/alunos.repository';
+import { CriarAlunoContract } from '../contracts/criar-aluno.contract';
+import { CriarAlunoDto } from '../dto/criar-aluno.dto';
 import { HttpStatus } from '../infra/http-status';
+import { Result } from '../infra/result';
+import { ValidationFailedError } from '../infra/validationFailedError';
+import { Aluno } from '../models/aluno';
+import { AlunosRepository } from '../repositories/alunos.repository';
 
 export class CriarAlunoHandler {
 
-    private _alunosRepository = alunosRepository;
+    private _alunosRepository: AlunosRepository;
 
-    public async handle(createAlunoDto: any): Promise<Result> {
-        const alunoCriado = await this._alunosRepository.create(createAlunoDto);        
-        const result = new Result(alunoCriado, 'aluno criado com sucesso', true, [], HttpStatus.SUCCESS);
+    constructor() {
+        this._alunosRepository = new AlunosRepository();
+    }
+
+    public async handle(criarAlunoDto: CriarAlunoDto): Promise<Result> {
+
+        this.validar(criarAlunoDto);
+        const alunoCriado = await this.criarNovoAluno(criarAlunoDto);
+        const result = new Result(alunoCriado, 'aluno criado com sucesso', true, []);
         return result;
     };
+
+
+    private validar(criarAlunoDto: CriarAlunoDto) {
+        const contract = new CriarAlunoContract();
+        const isInvalid = !contract.validate(criarAlunoDto);
+
+        if (isInvalid) {
+            throw new ValidationFailedError("falha ao criar aluno", ...contract.reports);
+        }
+
+    }
+
+    private async criarNovoAluno(criarAlunoDto: CriarAlunoDto) {
+        const novoAluno = {
+            registradoEm: new Date(),
+            ...criarAlunoDto
+        } as Aluno;
+
+        const alunoCriado = await this._alunosRepository.create(novoAluno);
+        return alunoCriado;
+    }
+
 
 }

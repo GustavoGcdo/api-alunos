@@ -4,14 +4,12 @@ export class Result {
     message: string;
     success: boolean;
     errors: Report[];
-    statusCode: number;
   
-    constructor(data: any, message: string, success: boolean, errors: Report[], statusCode: number) {
+    constructor(data: any, message: string, success: boolean, errors: Report[]) {
       this.data = data;
       this.message = message;
       this.success = success;
       this.errors = errors;
-      this.statusCode = statusCode;
     }
   }
   

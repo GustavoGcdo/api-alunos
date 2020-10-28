@@ -33,7 +33,7 @@ export class App {
     this.app.use(alunosRoute.getRoutes());
 
     this.app.use('*', function (req: Request, res: Response) {
-      const resultError = new Result(null, 'Método não permitido', false, [], HttpStatus.METHOD_NOT_ALLOWED);
+      const resultError = new Result(null, 'Método não permitido', false, []);
       return res.status(HttpStatus.METHOD_NOT_ALLOWED).send(resultError);
     });
   }
