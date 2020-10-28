@@ -3,6 +3,8 @@ import { Result } from '../infra/result';
 import { AlunosRepository } from '../repositories/alunos.repository';
 import { AlunoPaginateOptions } from '../models/aluno-paginate-options';
 import { PaginateAlunoDto } from '../dto/paginate-aluno.dto';
+import { PaginateAlunosContract } from '../contracts/paginate-alunos.contract';
+import { ValidationFailedError } from '../infra/validationFailedError';
 
 export class PaginarAlunosHandler {
     private _alunosRepository: AlunosRepository;
@@ -12,11 +14,30 @@ export class PaginarAlunosHandler {
     }
 
     public async handle(paginateAlunoDto: PaginateAlunoDto): Promise<Result> {
+        this.validar(paginateAlunoDto);
         const alunoPaginateOptions = this.getPaginateOptions(paginateAlunoDto);
-        const data = await this._alunosRepository.paginate(alunoPaginateOptions);
-        const result = new Result(data, 'alunos trazidos com sucesso', true, []);
+        const [results, count] = await this._alunosRepository.paginate(alunoPaginateOptions);
+        
+        const resultPaginate = {
+            results,
+            total: count,
+            page: alunoPaginateOptions.page,
+            limit: alunoPaginateOptions.limit,
+            offset: alunoPaginateOptions.offset
+        }
+
+        const result = new Result(resultPaginate, 'alunos trazidos com sucesso', true, []);
         return result;
     };
+
+    private validar(paginateAlunoDto: PaginateAlunoDto) {
+        const contract = new PaginateAlunosContract();
+        const isInvalid = !contract.validate(paginateAlunoDto);
+
+        if (isInvalid) {
+            throw new ValidationFailedError("falha ao buscar alunos", ...contract.reports);
+        }
+    }
 
     private getPaginateOptions(paginateAlunoDto: PaginateAlunoDto): AlunoPaginateOptions {
         let defaultPage = 1;
@@ -33,11 +54,12 @@ export class PaginarAlunosHandler {
         const offset = (defaultPage - 1) * defaultLimit;
 
         const alunoPaginateOptions: AlunoPaginateOptions = {
+            page: defaultPage,
             limit: defaultLimit,
             offset,
         }
 
-        if(paginateAlunoDto.nome){
+        if (paginateAlunoDto.nome) {
             alunoPaginateOptions.nome = paginateAlunoDto.nome;
         }
 

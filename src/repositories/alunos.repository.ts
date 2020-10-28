@@ -4,14 +4,14 @@ import { AlunoPaginateOptions } from '../models/aluno-paginate-options';
 
 export class AlunosRepository {
 
-    async paginate(options: AlunoPaginateOptions ): Promise<Aluno[]> {
+    async paginate(options: AlunoPaginateOptions ): Promise<[Aluno[], number]> {
         const queryBuilder = await getRepository(Aluno).createQueryBuilder('aluno')           
         
         if(options.nome){
             queryBuilder.where("aluno.nome LIKE :nome", { nome: `%${options.nome}%` });
         }
 
-        const result = queryBuilder.offset(options.offset).limit(options.limit).getMany();
+        const result = await queryBuilder.offset(options.offset).limit(options.limit).getManyAndCount();
         return result;
     }
 

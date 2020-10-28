@@ -30,7 +30,6 @@ export class CriarAlunoHandler {
         if (isInvalid) {
             throw new ValidationFailedError("falha ao criar aluno", ...contract.reports);
         }
-
     }
 
     private async criarNovoAluno(criarAlunoDto: CriarAlunoDto) {
