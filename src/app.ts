@@ -43,7 +43,7 @@ export class App {
       type: "sqlite",
       database: './db/alunos.sqlite',
       entities: [Aluno],
-      synchronize: false,
+      synchronize: true,
       logging: false
     });
 
