@@ -6,6 +6,8 @@ import { AtualizarAlunoHandler } from '../handlers/atualizar-aluno.handler';
 import { RemoverAlunoHandler } from '../handlers/remover-aluno.handler copy';
 import { HandleResponse } from '../infra/handleResponse';
 import { HttpStatus } from '../infra/http-status';
+import { AlunoPaginateOptions } from '../models/aluno-paginate-options';
+import { PaginateAlunoDto } from '../dto/paginate-aluno.dto';
 
 export class AlunosController {
     private paginarAlunosHandler: PaginarAlunosHandler;
@@ -23,8 +25,14 @@ export class AlunosController {
     }
 
     public async paginarAlunos(request: Request, response: Response) {
-        const result = await this.paginarAlunosHandler.handle();
-        return response.json(result);
+        try {
+            const { pagina, limite, nome } = request.query;
+            const paginateOptions = { pagina, limite, nome } as PaginateAlunoDto;
+            const result = await this.paginarAlunosHandler.handle(paginateOptions);
+            return HandleResponse.handle(response, HttpStatus.SUCCESS, result);
+        } catch (error) {
+            return HandleResponse.handleError(response, HttpStatus.BAD_REQUEST, error);
+        }
     }
 
     public async criarAluno(request: Request, response: Response) {
@@ -37,18 +45,30 @@ export class AlunosController {
     }
 
     public async buscarAlunoPorId(request: Request, response: Response) {
-        const result = await this.obterAlunoPorIdHandler.handle(request.params.id);
-        return response.json(result);
+        try {
+            const result = await this.obterAlunoPorIdHandler.handle(request.params.id);
+            return HandleResponse.handle(response, HttpStatus.SUCCESS, result);
+        } catch (error) {
+            return HandleResponse.handleError(response, HttpStatus.BAD_REQUEST, error);
+        }
     }
 
     public async atualizarAluno(request: Request, response: Response) {
-        const result = await this.atualizarAlunoHandler.handle(request.params.id, request.body);
-        return response.json(result);
+        try {
+            const result = await this.atualizarAlunoHandler.handle(request.params.id, request.body);
+            return HandleResponse.handle(response, HttpStatus.SUCCESS, result);
+        } catch (error) {
+            return HandleResponse.handleError(response, HttpStatus.BAD_REQUEST, error);
+        }
     }
 
     public async removerAluno(request: Request, response: Response) {
-        const result = await this.removerAlunoHandler.handle(request.params.id);
-        return response.json(result);
+        try {
+            const result = await this.removerAlunoHandler.handle(request.params.id);
+            return HandleResponse.handle(response, HttpStatus.SUCCESS, result);
+        } catch (error) {
+            return HandleResponse.handleError(response, HttpStatus.BAD_REQUEST, error);
+        }
     }
 
 }
