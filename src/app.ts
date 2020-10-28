@@ -23,7 +23,8 @@ export class App {
     return this.app;
   }
 
-  private configureMiddleWares() {
+  private configureMiddleWares() {    
+    this.app.use(express.urlencoded());
     this.app.use(express.json());
     this.app.use(cors());
   }
