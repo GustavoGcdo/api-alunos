@@ -1,10 +1,10 @@
-import { HttpStatus } from '../infra/enums/http-status';
-import { Result } from '../infra/models/result';
-import { AlunosRepository } from '../repositories/alunos.repository';
-import { AlunoPaginateOptions } from '../models/aluno-paginate-options';
-import { PaginateAlunoDto } from '../dto/paginate-aluno.dto';
 import { PaginateAlunosContract } from '../contracts/paginate-alunos.contract';
+import { PaginateAlunoDto } from '../dto/paginate-aluno.dto';
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../infra/constants';
 import { ValidationFailedError } from '../infra/errors/validation-failed.error';
+import { Result } from '../infra/models/result';
+import { AlunoPaginateOptions } from '../models/aluno-paginate-options';
+import { AlunosRepository } from '../repositories/alunos.repository';
 
 export class PaginarAlunosHandler {
     private _alunosRepository: AlunosRepository;
@@ -17,7 +17,7 @@ export class PaginarAlunosHandler {
         this.validar(paginateAlunoDto);
         const alunoPaginateOptions = this.getPaginateOptions(paginateAlunoDto);
         const [results, count] = await this._alunosRepository.paginate(alunoPaginateOptions);
-        
+
         const resultPaginate = {
             results,
             total: count,
@@ -40,8 +40,8 @@ export class PaginarAlunosHandler {
     }
 
     private getPaginateOptions(paginateAlunoDto: PaginateAlunoDto): AlunoPaginateOptions {
-        let defaultPage = 1;
-        let defaultLimit = 25;
+        let defaultPage = DEFAULT_PAGE;
+        let defaultLimit = DEFAULT_LIMIT;
 
         if (paginateAlunoDto?.pagina) {
             defaultPage = parseInt(paginateAlunoDto.pagina);

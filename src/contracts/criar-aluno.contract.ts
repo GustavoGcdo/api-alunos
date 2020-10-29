@@ -1,6 +1,7 @@
 import { CriarAlunoDto } from '../dto/criar-aluno.dto';
 import { Report } from '../infra/models/report';
 import { IContract } from '../infra/models/contract';
+import { PATTERN_RGA } from '../infra/constants';
 
 export class CriarAlunoContract implements IContract {
     public reports: Report[];
@@ -28,8 +29,7 @@ export class CriarAlunoContract implements IContract {
             this.reports.push({ name: 'rga', message: 'rga é obrigatório' })
         }
 
-        const patterRGA = /^\d{4}.\d{4}.\d{3}-\d{1}$/
-        const isInvalidRGA = !patterRGA.test(rga)
+        const isInvalidRGA = !PATTERN_RGA.test(rga)
 
         if (isInvalidRGA) {
             this.reports.push({ name: 'rga', message: 'rga deve estar no formato NNNN.NNNN.NNN-N' })

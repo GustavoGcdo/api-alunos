@@ -1,6 +1,7 @@
 import { IContract } from '../infra/models/contract';
 import { Report } from '../infra/models/report';
 import { PaginateAlunoDto } from '../dto/paginate-aluno.dto';
+import { MAX_LIMIT, MIN_LIMIT } from '../infra/constants';
 
 export class PaginateAlunosContract implements IContract {
     reports: Report[];
@@ -40,12 +41,10 @@ export class PaginateAlunosContract implements IContract {
             this.reports.push({ name: 'limite', message: 'limite deve ser um numero valido' });
         }
 
-        const MAX_LIMIT = 100
         if (parseInt(limite) > MAX_LIMIT) {
             this.reports.push({ name: 'limite', message: `limite deve ser menor que ${MAX_LIMIT}` });
         }
         
-        const MIN_LIMIT = 1
         if (parseInt(limite) < MIN_LIMIT) {
             this.reports.push({ name: 'limite', message: `limite deve ser maior que ${MIN_LIMIT}` });
         }

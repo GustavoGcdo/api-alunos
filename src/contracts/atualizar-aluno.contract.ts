@@ -2,6 +2,7 @@ import { AtualizarAlunoDto } from '../dto/atualizar-aluno.dto';
 import { Situacao } from '../enums/situacao.enum';
 import { IContract } from '../infra/models/contract';
 import { Report } from '../infra/models/report';
+import { PATTERN_RGA } from '../infra/constants';
 
 export class AtualizarAlunoContract implements IContract {
     public reports: Report[];
@@ -26,8 +27,7 @@ export class AtualizarAlunoContract implements IContract {
     }
 
     private validarRGA(rga: string) {
-        const patterRGA = /^\d{4}.\d{4}.\d{3}-\d{1}$/
-        const isInvalidRGA = !patterRGA.test(rga)
+        const isInvalidRGA = !PATTERN_RGA.test(rga)
 
         if (isInvalidRGA) {
             this.reports.push({ name: 'rga', message: 'rga deve estar no formato NNNN.NNNN.NNN-N' })

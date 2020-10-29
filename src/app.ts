@@ -42,7 +42,7 @@ export class App {
   private async connectToDatabase() {
     this.connection = await createConnection({
       type: "sqlite",
-      database: './database/alunos.sqlite',
+      database: config.DB_URL,
       entities: [Aluno],
       synchronize: true,
       logging: false
