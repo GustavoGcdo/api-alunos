@@ -4,7 +4,7 @@ import { AtualizarAlunoHandler } from '../handlers/atualizar-aluno.handler';
 import { CriarAlunoHandler } from '../handlers/criar-aluno.handler';
 import { ObterAlunoPorIdHandler } from '../handlers/obter-aluno-por-id.handler';
 import { PaginarAlunosHandler } from '../handlers/paginar-alunos.handler';
-import { RemoverAlunoHandler } from '../handlers/remover-aluno.handler copy';
+import { RemoverAlunoHandler } from '../handlers/remover-aluno.handler';
 import { HandleResponse } from '../infra/handleResponse';
 import { HttpStatus } from '../infra/http-status';
 
@@ -66,7 +66,7 @@ export class AlunosController {
             const result = await this.removerAlunoHandler.handle(request.params.id);
             return HandleResponse.handle(response, HttpStatus.SUCCESS, result);
         } catch (error) {
-            return HandleResponse.handleError(response, HttpStatus.BAD_REQUEST, error);
+            return HandleResponse.handleError(response, HttpStatus.NOT_FOUND, error);
         }
     }
 
