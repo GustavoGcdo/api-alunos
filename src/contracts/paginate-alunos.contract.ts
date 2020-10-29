@@ -44,6 +44,11 @@ export class PaginateAlunosContract implements IContract {
         if (parseInt(limite) > MAX_LIMIT) {
             this.reports.push({ name: 'limite', message: `limite deve ser menor que ${MAX_LIMIT}` });
         }
+        
+        const MIN_LIMIT = 1
+        if (parseInt(limite) < MIN_LIMIT) {
+            this.reports.push({ name: 'limite', message: `limite deve ser maior que ${MIN_LIMIT}` });
+        }
     }
 
     private NaoEhUmNumeroValido(valor: string) {
