@@ -28,7 +28,7 @@ export class CriarAlunoContract implements IContract {
             this.reports.push({ name: 'rga', message: 'rga é obrigatório' })
         }
 
-        const patterRGA = /\d{4}.\d{4}.\d{3}-\d{1}/
+        const patterRGA = /^\d{4}.\d{4}.\d{3}-\d{1}$/
         const isInvalidRGA = !patterRGA.test(rga)
 
         if (isInvalidRGA) {

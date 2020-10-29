@@ -1,13 +1,12 @@
 import { Request, Response } from 'express';
-import { PaginarAlunosHandler } from '../handlers/paginar-alunos.handler';
-import { ObterAlunoPorIdHandler } from '../handlers/obter-aluno-por-id.handler';
-import { CriarAlunoHandler } from '../handlers/criar-aluno.handler';
+import { PaginateAlunoDto } from '../dto/paginate-aluno.dto';
 import { AtualizarAlunoHandler } from '../handlers/atualizar-aluno.handler';
+import { CriarAlunoHandler } from '../handlers/criar-aluno.handler';
+import { ObterAlunoPorIdHandler } from '../handlers/obter-aluno-por-id.handler';
+import { PaginarAlunosHandler } from '../handlers/paginar-alunos.handler';
 import { RemoverAlunoHandler } from '../handlers/remover-aluno.handler copy';
 import { HandleResponse } from '../infra/handleResponse';
 import { HttpStatus } from '../infra/http-status';
-import { AlunoPaginateOptions } from '../models/aluno-paginate-options';
-import { PaginateAlunoDto } from '../dto/paginate-aluno.dto';
 
 export class AlunosController {
     private paginarAlunosHandler: PaginarAlunosHandler;
