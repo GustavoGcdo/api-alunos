@@ -1,5 +1,5 @@
-import { IContract } from '../infra/contract';
-import { Report } from '../infra/report';
+import { IContract } from '../infra/models/contract';
+import { Report } from '../infra/models/report';
 import { PaginateAlunoDto } from '../dto/paginate-aluno.dto';
 
 export class PaginateAlunosContract implements IContract {

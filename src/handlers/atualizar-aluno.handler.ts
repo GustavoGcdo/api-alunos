@@ -1,8 +1,8 @@
 import { AtualizarAlunoContract } from '../contracts/atualizar-aluno.contract';
 import { AtualizarAlunoDto } from '../dto/atualizar-aluno.dto';
-import { NotFoundError } from '../infra/NotFoundError';
-import { Result } from '../infra/result';
-import { ValidationFailedError } from '../infra/validationFailedError';
+import { NotFoundError } from '../infra/errors/not-found.error';
+import { Result } from '../infra/models/result';
+import { ValidationFailedError } from '../infra/errors/validation-failed.error';
 import { Aluno } from '../models/aluno';
 import { AlunosRepository } from '../repositories/alunos.repository';
 

@@ -1,7 +1,7 @@
 import { AtualizarAlunoDto } from '../dto/atualizar-aluno.dto';
 import { Situacao } from '../enums/situacao.enum';
-import { IContract } from '../infra/contract';
-import { Report } from '../infra/report';
+import { IContract } from '../infra/models/contract';
+import { Report } from '../infra/models/report';
 
 export class AtualizarAlunoContract implements IContract {
     public reports: Report[];

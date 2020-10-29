@@ -1,8 +1,8 @@
 import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import config from './config';
-import { HttpStatus } from './infra/http-status';
-import { Result } from './infra/result';
+import { HttpStatus } from './infra/enums/http-status';
+import { Result } from './infra/models/result';
 import { AlunosRoute } from './routes/alunos.route';
 import "reflect-metadata"
 import { Aluno } from './models/aluno';

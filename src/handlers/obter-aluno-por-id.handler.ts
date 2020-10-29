@@ -1,6 +1,6 @@
-import { HttpStatus } from '../infra/http-status';
-import { Result } from '../infra/result';
-import { ValidationFailedError } from '../infra/validationFailedError';
+import { HttpStatus } from '../infra/enums/http-status';
+import { Result } from '../infra/models/result';
+import { ValidationFailedError } from '../infra/errors/validation-failed.error';
 import { AlunosRepository } from '../repositories/alunos.repository';
 
 export class ObterAlunoPorIdHandler {

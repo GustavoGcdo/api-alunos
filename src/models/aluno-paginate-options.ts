@@ -1,4 +1,4 @@
-import { PaginateOptions } from '../infra/paginate-options';
+import { PaginateOptions } from '../infra/models/paginate-options';
 
 export interface AlunoPaginateOptions extends PaginateOptions {
     nome?: string;

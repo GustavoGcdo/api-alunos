@@ -1,5 +1,5 @@
-import { NotFoundError } from '../infra/NotFoundError';
-import { Result } from '../infra/result';
+import { NotFoundError } from '../infra/errors/not-found.error';
+import { Result } from '../infra/models/result';
 import { AlunosRepository } from '../repositories/alunos.repository';
 
 export class RemoverAlunoHandler {

@@ -5,8 +5,8 @@ import { CriarAlunoHandler } from '../handlers/criar-aluno.handler';
 import { ObterAlunoPorIdHandler } from '../handlers/obter-aluno-por-id.handler';
 import { PaginarAlunosHandler } from '../handlers/paginar-alunos.handler';
 import { RemoverAlunoHandler } from '../handlers/remover-aluno.handler';
-import { HandleResponse } from '../infra/handleResponse';
-import { HttpStatus } from '../infra/http-status';
+import { HandleResponse } from '../infra/handle-response';
+import { HttpStatus } from '../infra/enums/http-status';
 
 export class AlunosController {
     private paginarAlunosHandler: PaginarAlunosHandler;

@@ -1,8 +1,8 @@
 import { CriarAlunoContract } from '../contracts/criar-aluno.contract';
 import { CriarAlunoDto } from '../dto/criar-aluno.dto';
-import { HttpStatus } from '../infra/http-status';
-import { Result } from '../infra/result';
-import { ValidationFailedError } from '../infra/validationFailedError';
+import { HttpStatus } from '../infra/enums/http-status';
+import { Result } from '../infra/models/result';
+import { ValidationFailedError } from '../infra/errors/validation-failed.error';
 import { Aluno } from '../models/aluno';
 import { AlunosRepository } from '../repositories/alunos.repository';
 

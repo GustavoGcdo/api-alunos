@@ -1,10 +1,10 @@
-import { HttpStatus } from '../infra/http-status';
-import { Result } from '../infra/result';
+import { HttpStatus } from '../infra/enums/http-status';
+import { Result } from '../infra/models/result';
 import { AlunosRepository } from '../repositories/alunos.repository';
 import { AlunoPaginateOptions } from '../models/aluno-paginate-options';
 import { PaginateAlunoDto } from '../dto/paginate-aluno.dto';
 import { PaginateAlunosContract } from '../contracts/paginate-alunos.contract';
-import { ValidationFailedError } from '../infra/validationFailedError';
+import { ValidationFailedError } from '../infra/errors/validation-failed.error';
 
 export class PaginarAlunosHandler {
     private _alunosRepository: AlunosRepository;

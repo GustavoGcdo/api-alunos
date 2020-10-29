@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import { HttpStatus } from './http-status';
-import { Result } from './result';
-import { ValidationFailedError } from './validationFailedError';
-import { NotFoundError } from './NotFoundError';
+import { HttpStatus } from './enums/http-status';
+import { Result } from './models/result';
+import { ValidationFailedError } from './errors/validation-failed.error';
+import { NotFoundError } from './errors/not-found.error';
 
 export abstract class HandleResponse {
   public static handle(response: Response, status: HttpStatus, result: Result) {
