@@ -49,7 +49,7 @@ export class AlunosController {
             const result = await this.obterAlunoPorIdHandler.handle(request.params.id);
             return HandleResponse.handle(response, HttpStatus.SUCCESS, result);
         } catch (error) {
-            return HandleResponse.handleError(response, HttpStatus.BAD_REQUEST, error);
+            return HandleResponse.handleError(response, HttpStatus.NOT_FOUND, error);
         }
     }
 
