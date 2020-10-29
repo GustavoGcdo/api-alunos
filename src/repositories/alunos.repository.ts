@@ -30,7 +30,6 @@ export class AlunosRepository {
     }
 
     async remove(id: string): Promise<void> {
-        const result = await getRepository(Aluno).delete({ id });
-        console.log(result);
+        await getRepository(Aluno).delete({ id });
     }
 }
